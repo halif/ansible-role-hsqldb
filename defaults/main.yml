@@ -1,0 +1,23 @@
+---
+# Java for working HSQLDB
+hsqldb_java_package: default-jre-headless
+
+# Пакет HSQLDB из репозиториев Ubuntu/Debian (устанавливает hsqldb.jar в /usr/share/java)
+hsqldb_apt_package: libhsqldb-java
+hsqldb_jar_path: /usr/share/java/hsqldb.jar
+
+# Системный пользователь и каталоги
+hsqldb_user: hsqldb
+hsqldb_group: hsqldb
+hsqldb_home: /opt/hsqldb
+hsqldb_data_dir: "{{ hsqldb_home }}/data"
+
+# Параметры базы и сервера
+hsqldb_db_name: xdb
+hsqldb_listen_address: 0.0.0.0
+hsqldb_port: 9001
+
+# systemd unit
+hsqldb_service_name: hsqldb
+hsqldb_service_enabled: true
+hsqldb_service_state: started
