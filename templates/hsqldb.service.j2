@@ -1,0 +1,19 @@
+[Unit]
+Description=HyperSQL (HSQLDB) database server
+After=network.target
+
+[Service]
+Type=simple
+User={{ hsqldb_user }}
+Group={{ hsqldb_group }}
+WorkingDirectory={{ hsqldb_data_dir }}
+ExecStart=/usr/bin/java -cp {{ hsqldb_jar_path }} org.hsqldb.server.Server \
+    --database.0 file:{{ hsqldb_data_dir }}/{{ hsqldb_db_name }} \
+    --dbname.0 {{ hsqldb_db_name }} \
+    --address {{ hsqldb_listen_address }} \
+    --port {{ hsqldb_port }}
+Restart=on-failure
+RestartSec=5
+
+[Install]
+WantedBy=multi-user.target

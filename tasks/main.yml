@@ -1,0 +1,56 @@
+---
+- name: Установить Java (требуется для HSQLDB)
+  ansible.builtin.apt:
+    name: "{{ hsqldb_java_package }}"
+    state: present
+    update_cache: true
+    cache_valid_time: 3600
+
+- name: Установить пакет HSQLDB из репозитория Ubuntu/Debian
+  ansible.builtin.apt:
+    name: "{{ hsqldb_apt_package }}"
+    state: present
+
+- name: Создать группу для HSQLDB
+  ansible.builtin.group:
+    name: "{{ hsqldb_group }}"
+    system: true
+
+- name: Создать системного пользователя для HSQLDB
+  ansible.builtin.user:
+    name: "{{ hsqldb_user }}"
+    group: "{{ hsqldb_group }}"
+    system: true
+    shell: /usr/sbin/nologin
+    home: "{{ hsqldb_home }}"
+    create_home: false
+
+- name: Создать каталоги для данных базы
+  ansible.builtin.file:
+    path: "{{ hsqldb_data_dir }}"
+    state: directory
+    owner: "{{ hsqldb_user }}"
+    group: "{{ hsqldb_group }}"
+    mode: "0750"
+
+- name: Убедиться, что jar-файл HSQLDB присутствует
+  ansible.builtin.stat:
+    path: "{{ hsqldb_jar_path }}"
+  register: hsqldb_jar_stat
+  failed_when: not hsqldb_jar_stat.stat.exists
+
+- name: Развернуть unit-файл systemd
+  ansible.builtin.template:
+    src: "{{ hsqldb_service_template }}"
+    dest: "/etc/systemd/system/{{ hsqldb_service_name }}.service"
+    owner: root
+    group: root
+    mode: "0644"
+  notify: restart hsqldb
+
+- name: Включить и запустить сервис HSQLDB
+  ansible.builtin.systemd:
+    name: "{{ hsqldb_service_name }}"
+    enabled: "{{ hsqldb_service_enabled }}"
+    state: "{{ hsqldb_service_state }}"
+    daemon_reload: true
