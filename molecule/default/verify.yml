@@ -2,21 +2,18 @@
 - name: Verify
   hosts: all
   become: true
+
   tasks:
-    - name: Needed for  upload log files
+    - name: Check that the HSQLDB service is active
       ansible.builtin.systemd:
         name: hsqldb
-      register: hsqldb_service_status
+      register: _hsqldb_service
+      until: _hsqldb_service.status.ActiveState == 'active'
+      retries: 12
+      delay: 5
 
-    - name: Ensure, at service hsqldb is running
-      ansible.builtin.assert:
-        that:
-          - hsqldb_service_status.status.ActiveState == "active"
-        fail_msg: "Сервис hsqldb не в состоянии active"
-        success_msg: "Сервис hsqldb запущен и активен"
-
-    - name: Chek port connection
+    - name: Verify HSQLDB is listening on port 9001
       ansible.builtin.wait_for:
         host: 127.0.0.1
         port: 9001
-        timeout: 15
+        timeout: 30

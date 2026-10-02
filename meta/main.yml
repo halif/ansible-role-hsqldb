@@ -1,28 +1,23 @@
 ---
 galaxy_info:
-  role_name: hsqldb
+  author: halif
   namespace: halif
-  author: Halif
-  description: Install and configuration HyperSQL Database (HSQLDB) as systemd
-  company: ""
+  role_name: hsqldb
+  description: Install and configure HSQLDB
   license: MIT
   min_ansible_version: "2.14"
 
   platforms:
     - name: Ubuntu
       versions:
-        - focal
         - jammy
-        - noble
     - name: Debian
       versions:
-        - bullseye
         - bookworm
 
   galaxy_tags:
     - database
     - hsqldb
     - java
-    - sql
 
 dependencies: []
