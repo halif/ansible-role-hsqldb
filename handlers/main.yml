@@ -1,5 +1,5 @@
 ---
-- name: restart hsqldb
+- name: Restart hsqldb
   ansible.builtin.systemd:
     name: "{{ hsqldb_service_name }}"
     state: restarted

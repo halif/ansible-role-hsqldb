@@ -3,19 +3,19 @@
   hosts: all
   become: true
   tasks:
-    - name: Собрать факты о сервисах
+    - name: Needed for  upload log files
       ansible.builtin.systemd:
         name: hsqldb
       register: hsqldb_service_status
 
-    - name: Убедиться, что сервис hsqldb активен
+    - name: Ensure, at service hsqldb is running
       ansible.builtin.assert:
         that:
           - hsqldb_service_status.status.ActiveState == "active"
         fail_msg: "Сервис hsqldb не в состоянии active"
         success_msg: "Сервис hsqldb запущен и активен"
 
-    - name: Проверить, что порт HSQLDB открыт и слушает
+    - name: Chek port connection
       ansible.builtin.wait_for:
         host: 127.0.0.1
         port: 9001
