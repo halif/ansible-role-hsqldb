@@ -1,0 +1,22 @@
+---
+- name: Verify
+  hosts: all
+  become: true
+  tasks:
+    - name: Собрать факты о сервисах
+      ansible.builtin.systemd:
+        name: hsqldb
+      register: hsqldb_service_status
+
+    - name: Убедиться, что сервис hsqldb активен
+      ansible.builtin.assert:
+        that:
+          - hsqldb_service_status.status.ActiveState == "active"
+        fail_msg: "Сервис hsqldb не в состоянии active"
+        success_msg: "Сервис hsqldb запущен и активен"
+
+    - name: Проверить, что порт HSQLDB открыт и слушает
+      ansible.builtin.wait_for:
+        host: 127.0.0.1
+        port: 9001
+        timeout: 15
