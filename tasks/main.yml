@@ -4,7 +4,6 @@
     name: "{{ hsqldb_java_package }}"
     state: present
     update_cache: true
-    cache_valid_time: 3600
 
 - name: Install HSQLDB from repo for Debian and Ubuntu
   ansible.builtin.apt:
