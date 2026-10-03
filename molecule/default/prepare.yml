@@ -5,6 +5,12 @@
   gather_facts: false
 
   tasks:
+    - name: Ensure man directory exists (needed by Java alternatives in containers)
+      ansible.builtin.file:
+        path: /usr/share/man/man1
+        state: directory
+        mode: "0755"
+
     - name: Ensure apt lists directory exists
       ansible.builtin.file:
         path: /var/lib/apt/lists

@@ -1,4 +1,11 @@
 ---
+- name: Ensure man directory exists (needed by Java alternatives)
+  ansible.builtin.file:
+    path: /usr/share/man/man1
+    state: directory
+    mode: "0755"
+  when: ansible_facts['os_family'] == 'Debian'
+
 - name: Install Java
   ansible.builtin.apt:
     name: "{{ hsqldb_java_package }}"
