@@ -11,7 +11,7 @@
     name: "{{ hsqldb_apt_package }}"
     state: present
 
-- name: Create group for hsqldb
+- name: Create group for HSQLDB
   ansible.builtin.group:
     name: "{{ hsqldb_group }}"
     system: true
@@ -25,7 +25,7 @@
     home: "{{ hsqldb_home }}"
     create_home: false
 
-- name: СCreate directories for db
+- name: Create directories for HSQLDB data
   ansible.builtin.file:
     path: "{{ hsqldb_data_dir }}"
     state: directory
@@ -33,22 +33,27 @@
     group: "{{ hsqldb_group }}"
     mode: "0750"
 
-- name: Ensure jar-файл HSQLDB present
+- name: Check that HSQLDB jar file exists
   ansible.builtin.stat:
     path: "{{ hsqldb_jar_path }}"
   register: hsqldb_jar_stat
-  failed_when: not hsqldb_jar_stat.stat.exists
 
-- name: Make unit-file systemd
+- name: Assert that HSQLDB jar file is present
+  ansible.builtin.assert:
+    that:
+      - hsqldb_jar_stat.stat.exists
+    fail_msg: "HSQLDB jar not found at {{ hsqldb_jar_path }}"
+
+- name: Create systemd unit file for HSQLDB
   ansible.builtin.template:
     src: "{{ hsqldb_service_template }}"
     dest: "/etc/systemd/system/{{ hsqldb_service_name }}.service"
     owner: root
     group: root
     mode: "0644"
-  notify: restart hsqldb
+  notify: Restart HSQLDB
 
-- name: Enable and run HSQLDB
+- name: Enable and start HSQLDB
   ansible.builtin.systemd:
     name: "{{ hsqldb_service_name }}"
     enabled: "{{ hsqldb_service_enabled }}"
