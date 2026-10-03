@@ -4,7 +4,7 @@
 [![Tested with Molecule](https://img.shields.io/badge/tested%20with-Molecule-2ea44f?logo=ansible&logoColor=white)](https://ansible.readthedocs.io/projects/molecule/)
 [![Linted with ansible-lint](https://img.shields.io/badge/linted%20with-ansible--lint-1a1918?logo=ansible&logoColor=white)](https://ansible.readthedocs.io/projects/lint/)
 [![License: MIT](https://img.shields.io/badge/License-MIT-yellow.svg)](LICENSE)
-[![Ansible Galaxy](https://img.shields.io/badge/galaxy-YOUR_GALAXY_NAMESPACE.hsqldb-blue?logo=ansible&logoColor=white)](https://galaxy.ansible.com/ui/standalone/roles/YOUR_GALAXY_NAMESPACE/hsqldb/)
+[![Ansible Galaxy](https://img.shields.io/badge/halif.hsqldb-blue?logo=ansible&logoColor=white)](https://galaxy.ansible.com/ui/standalone/roles/halif/hsqldb/)
 
 An Ansible role that installs and configures [HSQLDB](https://hsqldb.org/) (HyperSQL Database) on Linux hosts.
 
@@ -88,7 +88,3 @@ Issues and pull requests are welcome. Please run `ansible-lint` and `molecule te
 ## License
 
 [MIT](LICENSE)
-
-## Author
-
-[YOUR_NAME](https://github.com/YOUR_GITHUB_USER)
