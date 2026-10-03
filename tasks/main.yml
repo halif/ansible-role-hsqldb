@@ -1,4 +1,13 @@
 ---
+- name: Install CA certificates first
+  ansible.builtin.apt:
+    name:
+      - ca-certificates
+      - ca-certificates-java
+    state: present
+    update_cache: true
+  when: ansible_facts['os_family'] == 'Debian'
+
 - name: Install Java
   ansible.builtin.apt:
     name: "{{ hsqldb_java_package }}"
