@@ -1,0 +1,19 @@
+---
+- name: Prepare
+  hosts: all
+  become: true
+  gather_facts: false
+
+  tasks:
+    - name: Ensure apt lists directory exists
+      ansible.builtin.file:
+        path: /var/lib/apt/lists
+        state: directory
+        owner: root
+        group: root
+        mode: "0755"
+
+    - name: Update apt cache
+      ansible.builtin.apt:
+        update_cache: true
+        cache_valid_time: 3600
