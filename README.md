@@ -46,13 +46,13 @@ None.
 
 From Ansible Galaxy:
 ```bash
-ansible-galaxy role install YOUR_GALAXY_NAMESPACE.hsqldb
+ansible-galaxy role install halif.hsqldb
 ```
 
 Or via `requirements.yml`:
 ```yaml
 roles:
-  - name: YOUR_GALAXY_NAMESPACE.hsqldb
+  - name: halif.hsqldb
 ```
 ```bash
 ansible-galaxy role install -r requirements.yml
@@ -64,7 +64,7 @@ ansible-galaxy role install -r requirements.yml
   hosts: db_servers
   become: true
   roles:
-    - role: YOUR_GALAXY_NAMESPACE.hsqldb
+    - role: halif.hsqldb
       vars:
  
 
